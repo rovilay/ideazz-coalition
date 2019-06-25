@@ -1,0 +1,19 @@
+{
+  "name": "ideazz",
+  "version": "1.0.0",
+  "description": "Just a coalition of ideaz ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rovilay/ideazz.git"
+  },
+  "author": "rovilay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rovilay/ideazz/issues"
+  },
+  "homepage": "https://github.com/rovilay/ideazz#readme"
+}
