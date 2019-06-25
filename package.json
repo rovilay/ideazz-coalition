@@ -2,11 +2,16 @@
   "name": "ideazz-coalition",
   "version": "1.0.0",
   "description": "Just a coalition of ideaz ",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/app.js",
-    "start:dev": "nodemon --exec babel-node ./src/app.js"
+    "start": "node ./dist/server/index.js",
+    "start:dev": "nodemon --exec babel-node ./server/index.js",
+    "build": "babel server -d dist/server",
+    "migration:dev:undo": "sequelize db:migrate:undo:all --env development",
+    "migration:dev": "sequelize db:migrate --env development",
+    "migration:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
+    "migration:prod": "sequelize db:migrate --env production"
   },
   "repository": {
     "type": "git",
@@ -22,10 +27,14 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.8.12"
   },
   "devDependencies": {
     "@babel/node": "^7.4.5",
