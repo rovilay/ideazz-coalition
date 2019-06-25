@@ -1,6 +1,6 @@
 
 import { hashPassword } from '../helpers/utils';
-import { invalidError, notNullErrorMsg } from '../helpers/defaults';
+import { isRequired, invalidErrorMsg } from '../helpers/defaults';
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isAlpha: `name ${invalidError}`,
-                notNull: `email ${notNullErrorMsg}`,
+                notNull: {
+                    msg: `name ${isRequired}`,
+                }
             }
         },
         email: {
@@ -17,15 +18,18 @@ module.exports = (sequelize, DataTypes) => {
             unique: true,
             allowNull: false,
             validate: {
-                isEmail: `email ${invalidError}`,
-                notNull: `email ${notNullErrorMsg}`,
+                isEmail: {
+                    msg: `email ${invalidErrorMsg}`
+                },
             }
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: `password ${notNullErrorMsg}`,
+                notNull: {
+                    msg: `password ${isRequired}`,
+                }
             }
         },
     }, {

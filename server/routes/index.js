@@ -4,6 +4,7 @@ import {
     nonExistingRouteMsg
 } from '../helpers/defaults';
 import errorHandler from '../middlewares/errorHandler';
+import userRoutes from './userRoutes';
 
 
 /**
@@ -19,6 +20,8 @@ const routes = (app) => {
             message: appWelcomeMsg
         });
     });
+
+    app.use(apiPrefix, userRoutes);
 
     // add new routes before the errorHandler
     app.use(errorHandler);

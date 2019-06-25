@@ -1,5 +1,5 @@
 import {
-    notNullErrorMsg,
+    isRequired,
     invalidMetricsAverageError,
     integerErrorMsg,
     minMaxError,
@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: `idea title ${notNullErrorMsg}`,
+                notNull: `idea title ${isRequired}`,
             }
         },
         confidence: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notNull: `confidence metric ${notNullErrorMsg}`,
+                notNull: `confidence metric ${isRequired}`,
                 isInt: integerErrorMsg,
                 min: {
                     args: 1,
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notNull: `ease metric ${notNullErrorMsg}`,
+                notNull: `ease metric ${isRequired}`,
                 isInt: integerErrorMsg,
                 min: {
                     args: 1,
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notNull: `impact metric ${notNullErrorMsg}`,
+                notNull: `impact metric ${isRequired}`,
                 isInt: integerErrorMsg,
                 min: {
                     args: 1,
@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notNull: `metrics average ${notNullErrorMsg}`,
+                notNull: `metrics average ${isRequired}`,
                 isInt: invalidMetricsAverageError,
                 min: {
                     args: 3,
