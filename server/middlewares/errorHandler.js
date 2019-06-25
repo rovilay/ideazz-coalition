@@ -1,4 +1,5 @@
 /* eslint no-unused-vars: 0 */
+import { genericErrorMessage } from '../helpers/defaults';
 
 /**
  * Middleware that Handles errors
@@ -10,11 +11,21 @@
  * @returns {object} response object
  */
 const errorHandler = (error, req, res, next) => {
-    const { message, errors } = error;
+    const { errors, name } = error;
+
+    if (name && name.toLowerCase().includes('sequelize')) {
+        const combinedErrors = {};
+        errors.forEach((err) => {
+            combinedErrors[err.path] = err.message;
+        });
+
+        error.status = 400;
+        error.message = combinedErrors;
+    }
 
     res.status(error.status || 500).json({
         success: false,
-        error: message || errors
+        error: error.message || error.errors || genericErrorMessage
     });
 };
 
