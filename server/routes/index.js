@@ -5,6 +5,7 @@ import {
 } from '../helpers/defaults';
 import errorHandler from '../middlewares/errorHandler';
 import userRoutes from './userRoutes';
+import ideaRoutes from './ideaRoutes';
 
 
 /**
@@ -22,6 +23,7 @@ const routes = (app) => {
     });
 
     app.use(apiPrefix, userRoutes);
+    app.use(apiPrefix, ideaRoutes);
 
     // add new routes before the errorHandler
     app.use(errorHandler);

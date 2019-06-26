@@ -72,9 +72,9 @@ class DB {
      * @returns {object} updated resource
      * @memberof DB
      */
-    static async updateOne(Model, data, conditions) {
+    static async update(Model, data, conditions) {
         try {
-            const updatedResource = await Model.Update(data, conditions);
+            const updatedResource = await Model.update(data, conditions);
             return updatedResource;
         } catch (error) {
             throw error;
@@ -110,7 +110,7 @@ class DB {
      */
     static async deleteAll(Model, conditions) {
         try {
-            await Model.deleteMany(conditions);
+            await Model.deleteAll(conditions);
             return;
         } catch (error) {
             throw error;

@@ -13,7 +13,9 @@ import { genericErrorMessage } from '../helpers/defaults';
 const errorHandler = (error, req, res, next) => {
     const { errors, name } = error;
 
-    if (name && name.toLowerCase().includes('sequelize')) {
+    if (name && name.toLowerCase().includes('sequelize')
+        && !['SequelizeDatabaseError', 'SequelizeForeignKeyConstraintError'].includes(name)
+    ) {
         const combinedErrors = {};
         errors.forEach((err) => {
             combinedErrors[err.path] = err.message;
