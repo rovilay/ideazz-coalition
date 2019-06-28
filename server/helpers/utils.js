@@ -21,10 +21,16 @@ export const hashPassword = async (userModel) => {
     }
 };
 
-export const calcIdeaMetricsAvg = (ideaModel) => {
-    /* eslint max-len: 0 */
-    const metricsAvg = (ideaModel.confidence + ideaModel.ease + ideaModel.impact) / ideaMetricsCount;
-    ideaModel.setDataValue('average', metricsAvg);
+export const calcIdeaMetricsAvg = async (ideaModel) => {
+    try {
+        /* eslint max-len: 0 */
+        let metricsAvg = (Number(ideaModel.confidence)
+            + Number(ideaModel.ease) + Number(ideaModel.impact)) / ideaMetricsCount;
+        metricsAvg = parseFloat(metricsAvg.toFixed(1));
+        await ideaModel.setDataValue('average', metricsAvg);
+    } catch (error) {
+        throw error;
+    }
 };
 
 /**
@@ -71,7 +77,7 @@ export const generateToken = async (user) => {
  */
 export const verifyToken = (token) => {
     if (token) {
-        jwt.verify(token, SECRET, (error, userData) => {
+        return jwt.verify(token, SECRET, (error, userData) => {
             if (error || userData === undefined) {
                 throw new Error(verifyTokenError);
             }
@@ -79,4 +85,18 @@ export const verifyToken = (token) => {
             return userData;
         });
     }
+};
+
+/**
+ * Verifies if value is an integer
+ *
+ * @param {any} value - value to verify
+ * @returns {number} - parsed integer value or unparsed value
+ */
+export const vetNumber = (value) => {
+    if (value && Number.isInteger(value)) {
+        return parseInt(value, 10);
+    }
+
+    return Number(value);
 };

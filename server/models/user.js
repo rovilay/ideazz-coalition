@@ -38,5 +38,8 @@ module.exports = (sequelize, DataTypes) => {
 
     User.beforeCreate(hashPassword);
 
+    User.associate = function (models) {
+        User.hasMany(models.Idea);
+    };
     return User;
 };

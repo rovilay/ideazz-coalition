@@ -3,7 +3,8 @@ import {
     invalidMetricsAverageError,
     integerErrorMsg,
     minMaxError,
-    avgMinMaxError
+    avgMinMaxError,
+    genericErrorMessage
 } from '../helpers/defaults';
 import { calcIdeaMetricsAvg } from '../helpers/utils';
 
@@ -13,15 +14,26 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: `idea title ${isRequired}`,
+                notNull: {
+                    msg: `idea's title ${isRequired}`
+                },
+                customValidator(value) {
+                    if (!value) {
+                        throw Error(`idea's title ${isRequired}`);
+                    }
+                }
             }
         },
         confidence: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notNull: `confidence metric ${isRequired}`,
-                isInt: integerErrorMsg,
+                notNull: {
+                    msg: `confidence metric ${isRequired}`
+                },
+                isInt: {
+                    msg: `confidence ${integerErrorMsg}`
+                },
                 min: {
                     args: 1,
                     msg: minMaxError
@@ -36,8 +48,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notNull: `ease metric ${isRequired}`,
-                isInt: integerErrorMsg,
+                notNull: {
+                    msg: `ease metric ${isRequired}`
+                },
+                isInt: {
+                    msg: `ease ${integerErrorMsg}`
+                },
                 min: {
                     args: 1,
                     msg: minMaxError
@@ -52,8 +68,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                notNull: `impact metric ${isRequired}`,
-                isInt: integerErrorMsg,
+                notNull: {
+                    msg: `impact metric ${isRequired}`
+                },
+                isInt: {
+                    msg: `impact ${integerErrorMsg}`
+                },
                 min: {
                     args: 1,
                     msg: minMaxError
@@ -65,18 +85,22 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         average: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull: false,
             validate: {
-                notNull: `metrics average ${isRequired}`,
-                isInt: invalidMetricsAverageError,
+                notNull: {
+                    msg: `${genericErrorMessage}. check your metrics rating`
+                },
+                isFloat: {
+                    msg: invalidMetricsAverageError
+                },
                 min: {
-                    args: 3,
-                    msg: avgMinMaxError
+                    args: 1,
+                    msg: minMaxError
                 },
                 max: {
                     args: 10,
-                    msg: avgMinMaxError
+                    msg: minMaxError
                 }
             }
         },
@@ -84,19 +108,20 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true,
         indexes: [{
             unique: true,
-            fields: ['userId', 'deletedAt']
+            fields: ['UserId', 'deletedAt']
         }]
     });
 
-    Idea.beforeCreate(calcIdeaMetricsAvg);
-    Idea.beforeUpdate(calcIdeaMetricsAvg);
+    Idea.beforeValidate(calcIdeaMetricsAvg);
+    // Idea.beforeUpdate(calcIdeaMetricsAvg);
 
     Idea.associate = function (models) {
         Idea.belongsTo(models.User, {
-            foreignKey: 'userId',
+            foreignKey: 'UserId',
             targetKey: 'id',
         });
     };
+
 
     return Idea;
 };

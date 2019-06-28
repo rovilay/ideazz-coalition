@@ -13,24 +13,29 @@ module.exports = {
             allowNull: false,
         },
         impact: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             allowNull: false,
         },
         ease: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             allowNull: false,
         },
         confidence: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             allowNull: false,
         },
         average: {
-            type: Sequelize.STRING,
+            type: Sequelize.FLOAT,
             allowNull: false,
         },
-        userId: {
-            type: Sequelize.UUID,
-            allowNull: false
+        UserId: {
+            type: Sequelize.INTEGER,
+            onDelete: 'set null',
+            allowNull: false,
+            references: {
+                model: 'Users',
+                key: 'id',
+            },
         },
         createdAt: {
             allowNull: false,
