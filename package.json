@@ -8,10 +8,10 @@
     "start": "node ./dist/server/index.js",
     "start:dev": "nodemon --exec babel-node ./server/index.js",
     "build": "babel server -d dist/server",
-    "migration:dev:undo": "sequelize db:migrate:undo:all --env development",
-    "migration:dev": "sequelize db:migrate --env development",
-    "migration:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
-    "migration:prod": "sequelize db:migrate --env production"
+    "migration:dev:undo": "./node_modules/.bin/sequelize db:migrate:undo:all --env development",
+    "migration:dev": "./node_modules/.bin/sequelize db:migrate --env development",
+    "migration:test": "./node_modules/.bin/sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
+    "migration:prod": "./node_modules/.bin/sequelize db:migrate --env production"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,8 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.8.12"
+    "sequelize": "^5.9.3",
+    "sequelize-cli": "^5.5.0"
   },
   "devDependencies": {
     "@babel/node": "^7.4.5",
