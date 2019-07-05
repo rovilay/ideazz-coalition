@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
+import Sequelize from '../../node_modules/sequelize';
 import dbConfig from '../config/config';
 
 dotenv.config();

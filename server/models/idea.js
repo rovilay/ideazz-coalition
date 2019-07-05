@@ -3,7 +3,6 @@ import {
     invalidMetricsAverageError,
     integerErrorMsg,
     minMaxError,
-    avgMinMaxError,
     genericErrorMessage
 } from '../helpers/defaults';
 import { calcIdeaMetricsAvg } from '../helpers/utils';
