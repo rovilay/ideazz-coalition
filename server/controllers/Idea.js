@@ -175,13 +175,11 @@ class IdeaController {
                 where: {
                     id: ideaId,
                     deletedAt: null,
-                    UserId: 1
+                    UserId
                 }
             };
 
-            const idea = await DB.findOne(IdeaModel, {
-                where: { UserId, id: ideaId, deletedAt: null }
-            });
+            const idea = await DB.findOne(IdeaModel, conditions);
 
             if (!idea) {
                 const error = {
