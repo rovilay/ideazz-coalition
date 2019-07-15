@@ -21,3 +21,4 @@ export const verifyTokenError = 'error verifying token';
 export const unavailableUser = 'user does not exist';
 export const invalidCredentials = 'invalid credentials';
 export const ideasNotFoundMsg = 'idea(s) not found';
+export const sortOptions = ['average', 'title', 'createdAt', 'updatedAt'];
