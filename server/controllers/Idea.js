@@ -2,7 +2,8 @@ import Models from '../models';
 import DB from '../helpers/db';
 import { vetNumber } from '../helpers/utils';
 import {
-    defaultSuccessMsg, ideasNotFoundMsg, genericErrorMessage, ideaMetricsCount,
+    defaultSuccessMsg, ideasNotFoundMsg, genericErrorMessage,
+    ideaMetricsCount, sortOptions
 } from '../helpers/defaults';
 
 const { Idea: IdeaModel } = Models;
@@ -51,12 +52,27 @@ class IdeaController {
     static async getAllIdeas(req, res, next) {
         try {
             const { id: UserId } = req.user;
+
             // TODO: validate limit and offset
-            const { limit = 10, offset = 0 } = req.query;
+            const { limit = 10, offset = 0, sort = sortOptions[0] } = req.query;
+            let order = 'DESC';
+
+            if (!sortOptions.includes(sort)) {
+                const validSorts = sortOptions.toString();
+                const error = Error(`can only sort by ${validSorts}`);
+                error.status = 400;
+
+                throw error;
+            }
+
+            if (sort === 'title') {
+                order = 'ASC';
+            }
+
             const conditions = {
                 limit,
                 offset,
-                order: [['average', 'DESC']],
+                order: [[sort, order]],
                 where: { UserId }
             };
 
@@ -175,13 +191,11 @@ class IdeaController {
                 where: {
                     id: ideaId,
                     deletedAt: null,
-                    UserId: 1
+                    UserId
                 }
             };
 
-            const idea = await DB.findOne(IdeaModel, {
-                where: { UserId, id: ideaId, deletedAt: null }
-            });
+            const idea = await DB.findOne(IdeaModel, conditions);
 
             if (!idea) {
                 const error = {
