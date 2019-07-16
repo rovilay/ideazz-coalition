@@ -52,6 +52,7 @@ class IdeaController {
     static async getAllIdeas(req, res, next) {
         try {
             const { id: UserId } = req.user;
+
             // TODO: validate limit and offset
             const { limit = 10, offset = 0, sort = sortOptions[0] } = req.query;
             let order = 'DESC';
